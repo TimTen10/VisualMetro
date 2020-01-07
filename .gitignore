@@ -129,4 +129,4 @@ dmypy.json
 .pyre/
 
 # Added ignores
-/timetables
+src/timetables
