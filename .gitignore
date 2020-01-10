@@ -129,4 +129,5 @@ dmypy.json
 .pyre/
 
 # Added ignores
-src/timetables
+src/timetableparser/timetables
+src/timetableparser/parsedtimetables
