@@ -19,6 +19,7 @@ def _parse_times(soup):
     return departures
 
 def _parse_timetable(timetable):
+    # TODO: line has to be added at some point
     # parse the given timetable html file
     # save a timetable in json format with the most basic and needed information
     # example dictionary
