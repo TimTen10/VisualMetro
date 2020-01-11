@@ -1,6 +1,6 @@
 import os
 import json
-import station
+from station import Station
 
 class Metroline:
 
@@ -37,11 +37,11 @@ class Metroline:
         leftright = sorted([x.location[1] for x in self.line])
         return [bottomtop[0], bottomtop[-1], leftright[0], leftright[-1]]
 
-def main():
+def _test():
     dir_path = os.path.dirname(os.path.realpath(__file__))
     tt_path = dir_path + f'/../timetableparser/parsedtimetables'
     asakusa = Metroline('Asakusa', 'red', tt_path)
     print(asakusa.zone)
 
 if __name__ == '__main__':
-    main()
+    _test()
