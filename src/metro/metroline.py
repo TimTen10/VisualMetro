@@ -1,6 +1,6 @@
 import os
 import json
-from station import Station
+from metro.station import Station
 
 class Metroline:
 
