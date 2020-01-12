@@ -28,6 +28,22 @@ class Metroline:
                     prev = station.name
                     line.append(station)
                     break
+            else:
+                raise Exception(f'A station with the name {prev} could not be found.')
+
+        # this for loop creates a linked list within the line list
+        for station in line:
+            set_prev, set_next = station.prev, station.next
+            try:
+                if station.prev != None:
+                    station.prev = [station for station in line if station.name == set_prev][0]
+            except:
+                raise Exception(f'A station with the name {set_prev} could not be found.')
+            try:
+                if station.next != None:
+                    station.next = [station for station in line if station.name == set_next][0]
+            except:
+                raise Exception(f'A station with the name {set_next} could not be found.')
         return line
 
     def _init_zone(self):
