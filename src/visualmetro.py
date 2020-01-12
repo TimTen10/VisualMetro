@@ -3,11 +3,12 @@ import tkinter as tk
 from metro.metroline import Metroline
 from metro.metronetwork import Metronetwork
 
-def _init_test_line(name):
+def _init_test_line(name, color):
     dir_path = os.path.dirname(os.path.realpath(__file__))
     tt_path = dir_path + f'/timetableparser/parsedtimetables/{name}'
-    return Metroline('Asakusa', 'red', tt_path)
+    return Metroline(f'{name}', f'{color}', tt_path)
 
+# width and height of the windows matters in this function
 def _get_pixel_size_factor(zone):
     height = round((zone[1] - zone[0]), 6)
     width = round((zone[3] - zone[2]), 6)
@@ -15,31 +16,35 @@ def _get_pixel_size_factor(zone):
     width = 1200 / width
     return width, height
 
+# width and height of the windows matters in this function
 def _get_zone_location(zone, location):
     width_fac, height_fac = _get_pixel_size_factor(zone)
     return 100 + (location[1] - zone[2]) * width_fac, 650 - (location[0] - zone[0]) * height_fac
 
-def _set_fitted_location(metroline):
-    for station in metroline.line:
-        station.location = list(_get_zone_location(metroline.zone, station.location))
+def _set_fitted_location(network):
+    for metroline in network.lines:
+        for station in metroline.line:
+            station.location = list(_get_zone_location(network.zone, station.location))
 
-def _draw_connections(canvas, metroline):
-    for station in metroline.line:
-        if station.next != None:
-            canvas.create_line(station.location[0] + 10, station.location[1] + 10,
-                               station.next.location[0] + 10, station.next.location[1] + 10)
+def _draw_connections(canvas, network):
+    for metroline in network.lines:
+        for station in metroline.line:
+            if station.next != None:
+                canvas.create_line(station.location[0] + 10, station.location[1] + 10,
+                                   station.next.location[0] + 10, station.next.location[1] + 10)
 
-def _draw_stations(canvas, metroline):
-    for station in metroline.line:
-        canvas.create_oval(station.location[0], station.location[1],
-                           station.location[0] + 20, station.location[1] + 20,
-                           fill=metroline.color)
-        canvas.create_text(station.location[0] + 10, station.location[1] - 10, text=station.name)
+def _draw_stations(canvas, network):
+    for metroline in network.lines:
+        for station in metroline.line:
+            canvas.create_oval(station.location[0], station.location[1],
+                               station.location[0] + 20, station.location[1] + 20,
+                               fill=metroline.color)
+            canvas.create_text(station.location[0] + 10, station.location[1] - 10, text=station.name)
 
-def main():
+def _test():
 
-    mita = _init_test_line('Mita')
-    asakusa = _init_test_line('Asakusa')
+    mita = _init_test_line('Mita', 'blue')
+    asakusa = _init_test_line('Asakusa', 'pink')
 
     tkobj = tk.Tk()
     canvas = tk.Canvas(tkobj, width=1400, height=700)
@@ -48,12 +53,12 @@ def main():
 
     test_network = Metronetwork('testing', [mita, asakusa])
 
-    _set_fitted_location(asakusa)
+    _set_fitted_location(test_network)
 
-    _draw_connections(canvas, asakusa)
-    _draw_stations(canvas, asakusa)
+    _draw_connections(canvas, test_network)
+    _draw_stations(canvas, test_network)
 
     tkobj.mainloop()
 
 if __name__ == '__main__':
-    main()
+    _test()
