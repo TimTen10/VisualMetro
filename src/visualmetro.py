@@ -33,7 +33,7 @@ def _draw_stations(canvas, metroline):
         canvas.create_oval(station.location[0], station.location[1],
                            station.location[0] + 20, station.location[1] + 20,
                            fill=metroline.color)
-        canvas.create_text(station.location[0], station.location[1], text=station.name)
+        canvas.create_text(station.location[0] + 10, station.location[1] - 10, text=station.name)
 
 def main():
 
