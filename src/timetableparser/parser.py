@@ -64,7 +64,7 @@ def _parse_timetable(timetable):
 
     return parsed_tt
 
-def parse_timetables(folder_path):
+def parse_timetables(folder_path, name):
     # IMPORTANT: there has to be a 'parsedtimetables' folder in the same parent
     # directory as the 'timetables' folder
     try:
@@ -72,7 +72,7 @@ def parse_timetables(folder_path):
             for file in files:
                 if file.endswith('.html'):
                     tt_dict = _parse_timetable(folder_path + f'/{file}')
-                    with open(folder_path + f'/../parsedtimetables/{tt_dict["name"]}.json', 'w') as json_file:
+                    with open(folder_path + f'/../parsedtimetables/{name}/{tt_dict["name"]}.json', 'w') as json_file:
                         json.dump(tt_dict, json_file)
     except:
         print('Unable to save the parsed timetables.'
@@ -85,7 +85,7 @@ def main():
     # create a json containing all necessary information.
     # This timetables folder has to be in the same directory as the parser.py file
     dir_path = os.path.dirname(os.path.realpath(__file__))
-    parse_timetables(dir_path + '/timetables')
+    parse_timetables(dir_path + '/timetables', 'Mita')
 
 if __name__ == '__main__':
     main()

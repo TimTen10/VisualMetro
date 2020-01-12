@@ -1,10 +1,11 @@
 import os
 import tkinter as tk
 from metro.metroline import Metroline
+from metro.metronetwork import Metronetwork
 
-def _init_test_line():
+def _init_test_line(name):
     dir_path = os.path.dirname(os.path.realpath(__file__))
-    tt_path = dir_path + f'/timetableparser/parsedtimetables'
+    tt_path = dir_path + f'/timetableparser/parsedtimetables/{name}'
     return Metroline('Asakusa', 'red', tt_path)
 
 def _get_pixel_size_factor(zone):
@@ -37,13 +38,15 @@ def _draw_stations(canvas, metroline):
 
 def main():
 
-    asakusa = _init_test_line()
-    print(asakusa.zone)
+    mita = _init_test_line('Mita')
+    asakusa = _init_test_line('Asakusa')
 
     tkobj = tk.Tk()
     canvas = tk.Canvas(tkobj, width=1400, height=700)
     tkobj.title("VisualMetro")
     canvas.pack()
+
+    test_network = Metronetwork('testing', [mita, asakusa])
 
     _set_fitted_location(asakusa)
 
