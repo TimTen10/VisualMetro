@@ -7,6 +7,8 @@ class Station:
         self.next = station_info['next']
         self.departures = station_info['departures']
         self.location = station_info['location']
+        self.time_next = 0
+        self.time_prev = 0
 
     def get_times(self, hour):
         # for now does not handle the input of false values like negatives

@@ -10,6 +10,7 @@ class Metroline:
         self.stationsfolder = stationsfolder
         self.line = self._init_line(stationsfolder)
         self.zone = self._init_zone()
+        self._init_station_times()
 
     def _init_line(self, folder):
         unsorted_line, line = [], []
@@ -52,6 +53,10 @@ class Metroline:
         bottomtop = sorted([x.location[0] for x in self.line])
         leftright = sorted([x.location[1] for x in self.line])
         return [bottomtop[0], bottomtop[-1], leftright[0], leftright[-1]]
+
+    def _init_station_times(self):
+        # TODO: calculate the average time it takes from station x to prev/next
+        pass
 
 def _test():
     dir_path = os.path.dirname(os.path.realpath(__file__))
